@@ -41,7 +41,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ vars.DOCKER_HUB_IMAGE_PATH }}:latest
+          tags: ${{ secrets.DOCKER_HUB_IMAGE_PATH }}:latest
   deploy-to-render:
       needs: deploy-to-docker
       runs-on: ubuntu-latest
