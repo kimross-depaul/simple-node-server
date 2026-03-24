@@ -1,13 +1,28 @@
 name: Pipeline Demo
-
 on:
-    push:
-        branches:
-            - "**"
-            
+  push:
+    branches:
+      - "**"
+
 jobs:
-    hello-job:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Say hello
-                run: echo "Yay Github actions is running!"
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm test
